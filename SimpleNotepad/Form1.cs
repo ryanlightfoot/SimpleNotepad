@@ -61,21 +61,29 @@ namespace SimpleNotepad
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFileDialog savefiledialog1 = new SaveFileDialog();
 
+            savefiledialog1.ShowDialog();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderdlg = new FolderBrowserDialog();
-            FileNameDlg fileName = new FileNameDlg();
 
-            fileName.ShowDialog();
+            SaveFileDialog saveFD = new SaveFileDialog();
 
-            string fileNameS = fileName.getFileName();
-            
-            if(folderdlg.ShowDialog() == DialogResult.OK)
+            saveFD.Filter = "Text document|*.rtf";
+            saveFD.DefaultExt = "*.rtf";
+            saveFD.Title = "Save your text document";
+
+            saveFD.ShowDialog();
+
+            if(saveFD.FileName != "")
             {
-                
+                FileStream fs = (FileStream)saveFD.OpenFile();
+
+                fs.Close();
+
+                MaintxtB.SaveFile(saveFD.FileName);
             }
 
         }
